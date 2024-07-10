@@ -22,9 +22,9 @@ class User(db.Model):
 
     @classmethod
     def create(cls, email, password):
-       """Create and return a new user."""
+        """Create and return a new user."""
 
-       return cls(email=email, password=password)
+        return cls(email=email, password=password)
 
     @classmethod
     def get_by_id(cls, user_id):
@@ -64,13 +64,21 @@ class Movie(db.Model):
             overview=overview,
             release_date=release_date,
             poster_path=poster_path,
-            )
+        )
 
     @classmethod
     def all_movies(cls):
         """Return all movies."""
 
-        return cls.query.all()
+        return [
+            {
+                "title": movie.title,
+                "overview": movie.overview,
+                "release_date": movie.release_date,
+                "poster_path": movie.poster_path,
+            }
+            for movie in cls.query.all()
+        ]
 
     @classmethod
     def get_by_id(cls, movie_id):
@@ -103,7 +111,7 @@ class Rating(db.Model):
 
     @classmethod
     def update(cls, rating_id, new_score):
-        """ Update a rating given rating_id and the updated score. """
+        """Update a rating given rating_id and the updated score."""
         rating = cls.query.get(rating_id)
         rating.score = new_score
 
