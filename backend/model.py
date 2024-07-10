@@ -72,6 +72,7 @@ class Movie(db.Model):
 
         return [
             {
+                "movie_id": movie.movie_id,
                 "title": movie.title,
                 "overview": movie.overview,
                 "release_date": movie.release_date,
